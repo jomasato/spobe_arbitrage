@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アービトラージ分析ツール</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="arbitrage.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-7xl mx-auto p-4">
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">アービトラージ分析ツール</h2>
+                <div class="space-x-4">
+                    <select id="matchType" class="border rounded-md px-3 py-2">
+                        <option value="win_lose">ホーム/アウェイ</option>
+                        <option value="1x2">1x2（ホーム/引分/アウェイ）</option>
+                    </select>
+                    <button onclick="calculateArbitrage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                        分析実行
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table id="bookmakerTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ブックメーカー</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ホーム勝利</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">アウェイ勝利</th>
+                            <th class="w-12"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    </tbody>
+                </table>
+            </div>
+
+            <button onclick="addBookmaker()" class="mt-4 flex items-center text-blue-600 hover:text-blue-700 px-4 py-2 border border-blue-600 rounded-md">
+                + ブックメーカー追加
+            </button>
+        </div>
+
+        <div id="analysisResults" class="bg-white rounded-lg shadow p-6 hidden">
+            <h2 class="text-xl font-bold mb-4">分析結果</h2>
+            <div id="arbitrageAlert"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">最適な賭け配分（投資額100円）</h3>
+                    <table id="resultsTable" class="min-w-full divide-y divide-gray-200"></table>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-3">収益性分析</h3>
+                    <div class="bg-gray-50 p-4 rounded-md space-y-2">
+                        <p id="totalInvestment" class="text-gray-700"></p>
+                        <p id="profitRate" class="text-gray-700"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-3">オッズ比較</h3>
+                <canvas id="oddsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
